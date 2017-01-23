@@ -1,0 +1,558 @@
+#: import hex_color kivy.utils.get_color_from_hex
+
+<HeaderLabel@Label>:
+	canvas.before:
+		Color:
+			rgb: hex_color('#4682B4')
+		Rectangle:
+			size: self.size
+			pos: self.pos
+	font_name: 'SimHei'
+    font_size: 20
+    size_hint_y: None
+    height: 50
+
+<TableHeader@BoxLayout>:
+	size_hint_y: None
+	height: 50
+	HeaderLabel:
+		text: 'id'
+
+	HeaderLabel:
+		text: 'type'
+
+	HeaderLabel:
+		text: 'title'
+
+	HeaderLabel:
+		text: 'publisher'
+
+	HeaderLabel:
+		text: 'year'
+
+	HeaderLabel:
+		text: 'author'
+
+	HeaderLabel:
+		text: 'price'
+
+	HeaderLabel:
+		text: 'total'
+
+	HeaderLabel:
+		text: 'stock'
+
+<BookTable>:
+	orientation: 'vertical'
+
+<BookList>:
+	effect_cls: 'ScrollEffect'
+
+<Button>:
+    font_name: 'SimHei'
+    font_size: 20
+    bold: True
+    background_normal: 'button_normal.png'
+    background_down: 'button_down.png'
+    border: 2, 2, 2, 2
+    color: hex_color('#FFFFFF')
+
+<RedButton@Button>:
+	background_normal: 'red_button_normal.png'
+	background_down: 'red_button_down.png'
+
+<TextInput>:
+	multiline: False
+	font_name: 'SimHei'
+    font_size: 20
+
+<RobotoLabel@Label>:
+	font_name: 'SimHei'
+    font_size: 20
+    color: hex_color('#000000')
+
+<ErrorLabel@RobotoLabel>:
+	text_size: self.size
+
+<RobotoRadio@RadioButton>:
+    font_name: 'SimHei'
+    font_size: 20
+    bold: True
+    color: hex_color('#FFFFFF')
+    background_normal: 'button_normal.png'
+    background_down: 'button_down.png'
+    border: 2, 2, 2, 2
+
+<UserFunctionRadio@RobotoRadio>:
+	group: 'user_function'
+
+<AdminFunctionRadio@RobotoRadio>:
+	group: 'admin_function'
+
+<FunctionList@BoxLayout>:
+	padding: 2
+	spacing: 2
+	size_hint_x: None
+	width: 160
+	orientation: 'vertical'
+
+
+<UserFunctionList@FunctionList>:
+	UserFunctionRadio:
+		text: 'search books'
+		state: 'down'
+		on_release: app.root.load_slide("SearchBooks")
+	UserFunctionRadio:
+		id: login_radio
+		text: 'login'
+		on_release: app.root.load_slide('Login')
+		background_normal: 'red_button_normal.png'
+		background_down: 'red_button_down.png'
+
+<AdminFunctionList@FunctionList>:
+	AdminFunctionRadio:
+		text: 'search books'
+		state: 'down'
+		on_release: app.root.load_slide('SearchBooks')
+	AdminFunctionRadio:
+		text: 'add book'
+		on_release: app.root.load_slide('AddBook')
+	AdminFunctionRadio:
+		text: 'import books'
+		on_release: app.root.load_slide('ImportBooks')
+	AdminFunctionRadio:
+		text: 'borrow book'
+		on_release: app.root.load_slide('BorrowBook')
+	AdminFunctionRadio:
+		text: 'return book'
+		on_release: app.root.load_slide('ReturnBook')
+	AdminFunctionRadio:
+		text: 'add card'
+		on_release: app.root.load_slide('AddCard')
+	AdminFunctionRadio:
+		text: 'remove card'
+		on_release: app.root.load_slide('RemoveCard')
+	AdminFunctionRadio:
+		id: logout_radio
+		text: 'logout'
+		on_release: app.root.load_slide('Logout')
+		background_normal: 'red_button_normal.png'
+		background_down: 'red_button_down.png'
+
+<SearchBooks@BoxLayout>:
+	title_input: title_input
+	type_input: type_input
+	publisher_input: publisher_input
+	author_input: author_input
+	start_year_input: start_year_input
+	end_year_input: end_year_input
+	start_price_input: start_price_input
+	end_price_input: end_price_input
+	order_by_input: order_by_input
+	desc_input: desc_input
+	book_table: book_table
+	orientation: 'vertical'
+	BoxLayout:
+		orientation: 'vertical'
+		padding: 10
+		spacing: 10
+		size_hint_y: None
+		height: 400
+		BoxLayout:
+			RobotoLabel:
+				text: 'title'
+			TextInput:
+				id: title_input
+
+		BoxLayout:
+			RobotoLabel:
+				text: 'type'
+			TextInput:
+				id: type_input
+
+		BoxLayout:
+			RobotoLabel:
+				text: 'publisher'
+			TextInput:
+				id: publisher_input
+
+		BoxLayout:
+			RobotoLabel:
+				text: 'author'
+			TextInput:
+				id: author_input
+
+		BoxLayout:
+			RobotoLabel:
+				text: 'year'
+			TextInput:
+				id: start_year_input
+			RobotoLabel:
+				text: 'to'
+			TextInput:
+				id: end_year_input
+
+		BoxLayout:
+			RobotoLabel:
+				text: 'price'
+			TextInput:
+				id: start_price_input
+			RobotoLabel:
+				text: 'to'
+			TextInput:
+				id: end_price_input
+
+		BoxLayout:
+			padding: 10
+			spacing: 10
+			size_hint_y: None
+			height: 70
+			RobotoLabel:
+				text: 'order by'
+			Spinner:
+				id: order_by_input
+				values: ['default', 'title', 'type', 'publisher', 'author', 'year', 'price']
+			CheckBox:
+				size_hint_x: None
+				width: 30
+				background_checkbox_normal: 'color_button_normal.png'
+				background__checkbox_down: 'color_button_normal.png'
+				id: desc_input
+			RobotoLabel:
+				text: 'descending order'
+
+#			Button:
+#				size_hint_x: None
+#				width: 40
+#				text: '+'
+#			Button:
+#				size_hint_x: None
+#				width: 40
+#				text: '-'
+
+		Button:
+			text: 'search'
+			size_hint_y: None
+			height: 70
+			on_release: app.root.do_search_books()
+
+	BookTable:
+		id: book_table
+
+<AddBook@BoxLayout>:
+	id_input: id_input
+	type_input: type_input
+	title_input: title_input
+	publisher_input: publisher_input
+	year_input: year_input
+	author_input: author_input
+	price_input: price_input
+	total_input: total_input
+	error: error
+	orientation: 'vertical'
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint_y: None
+		height: 500
+		padding: 10
+		spacing: 10
+		BoxLayout:
+			RobotoLabel:
+				text: 'id'
+			TextInput:
+				id: id_input
+
+		BoxLayout:
+			RobotoLabel:
+				text: 'type'
+			TextInput:
+				id: type_input
+
+		BoxLayout:
+			RobotoLabel:
+				text: 'title'
+			TextInput:
+				id: title_input
+
+		BoxLayout:
+			RobotoLabel:
+				text: 'publisher'
+			TextInput:
+				id: publisher_input
+
+		BoxLayout:
+			RobotoLabel:
+				text: 'year'
+			TextInput:
+				id: year_input
+
+		BoxLayout:
+			RobotoLabel:
+				text: 'author'
+			TextInput:
+				id: author_input
+
+		BoxLayout:
+			RobotoLabel:
+				text: 'price'
+			TextInput:
+				id: price_input
+
+		BoxLayout:
+			RobotoLabel:
+				text: 'total'
+			TextInput:
+				id: total_input
+
+		Button:
+			text: 'add'
+			on_release: app.root.do_add_book()
+
+	RobotoLabel:
+		id: error
+
+<ImportBooks@AnchorLayout>:
+	error: error
+	path_input: path_input
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint_y: None
+		height: 200
+		padding: 10
+		spacing: 10
+		BoxLayout:
+			RobotoLabel:
+				text: 'file path'
+				size_hint_x: None
+				width: 120
+			TextInput:
+				id: path_input
+
+		Button:
+			text: 'import'
+			on_release: app.root.do_import_books()
+
+		RobotoLabel:
+			text: ''
+			id: error
+
+<BorrowBook@BoxLayout>:
+	card_id_input: card_id_input
+	book_table: book_table
+	book_id_input: book_id_input
+	year_input: year_input
+	month_input: month_input
+	day_input: day_input
+	error: error
+	orientation: 'vertical'
+	padding: 10
+	spacing: 10
+	BoxLayout:
+		size_hint_y: None
+		height: 70
+		padding: 10
+		spacing: 10
+		RobotoLabel:
+			text: 'card id'
+		TextInput:
+			id: card_id_input
+		Button:
+			text: 'search'
+			on_release: app.root.do_list_borrows()
+
+	BookTable:
+		id: book_table
+
+	BoxLayout:
+		size_hint_y: None
+		height: 60
+		padding: 10
+		spacing: 10
+		RobotoLabel:
+			text: 'book id'
+		TextInput:
+			id: book_id_input
+
+	BoxLayout:
+		size_hint_y: None
+		height: 100
+		padding: 10
+		spacing: 10
+		RobotoLabel:
+			text: 'return date'
+		GridLayout:
+			cols: 3
+			RobotoLabel:
+				text: 'year'
+			RobotoLabel:
+				text: 'month'
+			RobotoLabel:
+				text: 'day'
+			TextInput:
+				id: year_input
+			TextInput:
+				id: month_input
+			TextInput:
+				id: day_input
+
+
+	Button:
+		size_hint_y: None
+		height: 50
+		text: 'borrow'
+		on_release: app.root.do_borrow_book()
+
+	RobotoLabel:
+		id: error
+		size_hint_y: None
+		height: 100
+
+<ReturnBook@BoxLayout>:
+	card_id_input: card_id_input
+	book_table: book_table
+	book_id_input: book_id_input
+	error: error
+	orientation: 'vertical'
+	BoxLayout:
+		size_hint_y: None
+		height: 70
+		padding: 10
+		spacing: 10
+		RobotoLabel:
+			text: 'card id'
+		TextInput:
+			id: card_id_input
+		Button:
+			text: 'search'
+			on_release: app.root.do_list_borrows()
+
+	BookTable:
+		id: book_table
+
+	BoxLayout:
+		size_hint_y: None
+		height: 70
+		padding: 10
+		spacing: 10
+		RobotoLabel:
+			text: 'book id'
+		TextInput:
+			id: book_id_input
+		Button:
+			text: 'return'
+			on_release: app.root.do_return_book()
+	RobotoLabel:
+		id: error
+		size_hint_y: None
+		height: 100
+
+<AddCard@AnchorLayout>:
+	error: error
+	id_input: id_input
+	name_input: name_input
+	dept_input: dept_input
+	type_input: type_input
+
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint: None, None
+		size: 600, 400
+		padding: 10
+		spacing: 10
+		BoxLayout:
+			RobotoLabel:
+				text: 'id'
+			TextInput:
+				id: id_input
+
+		BoxLayout:
+			RobotoLabel:
+				text: 'name'
+			TextInput:
+				id: name_input
+
+		BoxLayout:
+			RobotoLabel:
+				text: 'dept'
+			TextInput:
+				id: dept_input
+
+		BoxLayout:
+			RobotoLabel:
+				text: 'type'
+			TextInput:
+				id: type_input
+
+		Button:
+			text: 'add'
+			on_release: app.root.do_add_card()
+
+		RobotoLabel:
+			id: error
+			text: ''
+
+<RemoveCard@AnchorLayout>:
+	error: error
+	id_input: id_input
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint: None, None
+		size: 400, 200
+		padding: 10
+		spacing: 10
+		BoxLayout:
+			RobotoLabel:
+				text: 'id'
+			TextInput:
+				id: id_input
+
+		RedButton:
+			text: 'remove'
+			on_release: app.root.do_remove_card()
+
+		RobotoLabel:
+			text: ''
+			id: error
+
+<Login@AnchorLayout>:
+	id_input: id_input
+	password_input: password_input
+	error: error
+
+	anchor_x: 'center'
+	anchor_y: 'center'
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint: None, None
+		size: 400, 200
+		padding: 10
+		spacing: 10
+		BoxLayout:
+			RobotoLabel:
+				text: 'id'
+			TextInput:
+				id: id_input
+				multiline: False
+		BoxLayout:
+			RobotoLabel:
+				text: 'password'
+			TextInput:
+				id: password_input
+				multiline: False
+				password: True
+		Button:
+			text: 'login'
+			on_release: app.root.do_login()
+		RobotoLabel:
+			id: error
+			text: ''
+			color: hex_color('FF0000')
+
+<Logout@AnchorLayout>:
+	anchor_x: 'center'
+	anchor_y: 'center'
+	RedButton:
+		size_hint: None, None
+		size: 300, 100
+		text: ' confirm logout'
+		on_release: app.root.do_logout()
